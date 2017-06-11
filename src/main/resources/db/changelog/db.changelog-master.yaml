@@ -1,5 +1,5 @@
 databaseChangeLog:
   - changeSet:
-    id: 1
-    author: dupirefr
-    comment: Dummy changeSet
+      id: 1
+      author: dupirefr
+      comment: Dummy changeSet
