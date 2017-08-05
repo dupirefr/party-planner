@@ -37,5 +37,9 @@ monolog:
         #    type: chromephp
         #    level: info
 
+doctrine:
+    dbal:
+        url: "%env(DATABASE_URL)%"
+
 #swiftmailer:
 #    delivery_addresses: ['me@example.com']
