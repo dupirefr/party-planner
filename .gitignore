@@ -1,6 +1,3 @@
-### Heroku ###
-.env
-
 ### IntelliJ IDEA ###
 .idea
 *.iws
