@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="person")
  * @ORM\Entity(repositoryClass="PartyPlanner\UserBundle\Repository\PersonRepository")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({"person" = "Person", "user" = "User"})
  */
 class Person
 {
