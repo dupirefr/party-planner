@@ -3,6 +3,7 @@
 namespace PartyPlanner\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Person
@@ -28,6 +29,7 @@ class Person
      * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=50)
+     * @Assert\NotBlank()
      */
     private $firstName;
 
@@ -35,6 +37,7 @@ class Person
      * @var string
      *
      * @ORM\Column(name="lastName", type="string", length=50)
+     * @Assert\NotBlank()
      */
     private $lastName;
 
@@ -97,4 +100,3 @@ class Person
         return $this->lastName;
     }
 }
-
