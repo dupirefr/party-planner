@@ -30,6 +30,7 @@ class Person
      *
      * @ORM\Column(name="firstName", type="string", length=50)
      * @Assert\NotBlank()
+     * @Assert\Length(max = 50)
      */
     private $firstName;
 
@@ -38,6 +39,7 @@ class Person
      *
      * @ORM\Column(name="lastName", type="string", length=50)
      * @Assert\NotBlank()
+     * @Assert\Length(max = 50)
      */
     private $lastName;
 

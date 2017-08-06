@@ -27,7 +27,11 @@ class DefaultController extends Controller
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // TODO
+            $user = $form->getData();
+            $user->setPassword(password_hash($user->getPassword(), PASSWORD_BCRYPT));
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
         }
         return $this->render('UserBundle:Default:signup.html.twig', array('form' => $form->createView()));
     }

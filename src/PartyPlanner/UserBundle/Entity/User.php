@@ -3,6 +3,7 @@
 namespace PartyPlanner\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -25,6 +26,8 @@ class User extends Person
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @Assert\Email()
+     *
      */
     private $email;
 
@@ -32,22 +35,29 @@ class User extends Person
      * @var \DateTime
      *
      * @ORM\Column(name="birthDate", type="datetime", nullable=true)
+     * @Assert\Date()
      */
     private $birthDate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=255)
+     * @ORM\Column(name="password", type="string", length=60)
+     * @Assert\Length(min = 8, max=72)
+     * @Assert\Regex(
+     * pattern = "/[0-9]/",
+     * message = "Your password must contain at least a digit."
+     * )
+     * @Assert\Regex(
+     * pattern = "/[A-Z]/",
+     * message = "Your password must contain at least a capital letter."
+     * )
+     * @Assert\Regex(
+     * pattern = "/[^a-zA-Z0-9]/",
+     * message = "Your password must contain at least a special character."
+     * )
      */
     private $password;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="salt", type="string", length=255)
-     */
-    private $salt;
 
 
     /**
@@ -130,29 +140,5 @@ class User extends Person
     public function getPassword()
     {
         return $this->password;
-    }
-
-    /**
-     * Set salt
-     *
-     * @param string $salt
-     *
-     * @return User
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
-
-        return $this;
-    }
-
-    /**
-     * Get salt
-     *
-     * @return string
-     */
-    public function getSalt()
-    {
-        return $this->salt;
     }
 }
