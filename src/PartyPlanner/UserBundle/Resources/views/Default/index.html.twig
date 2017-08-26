@@ -1,1 +1,9 @@
-Hello World!
+{% extends 'base.html.twig' %}
+
+{% block pageTitle %}Home - {{ parent() }}{% endblock %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+Hello world!
+{% endblock %}

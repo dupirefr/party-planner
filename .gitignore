@@ -21,3 +21,7 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
+/web/build/
+
+### Node.js ###
+/node_modules/
