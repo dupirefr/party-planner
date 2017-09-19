@@ -24,7 +24,21 @@
         <!-- Content -->
         <h1>{% block title %}{% endblock %}</h1>
         <div class="container-fluid">
-            {% block body %}{% endblock %}
+            {% block body %}
+            <div id="flash">
+                {% if errorBag is defined %}
+                    {% for error in errorBag %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if infoBag is defined %}
+                    {% for info in infoBag %}
+                    <div class="alert alert-success">{{ info }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            {% endblock %}
         </div>
         {% block javascripts %}{% endblock %}
     </body>

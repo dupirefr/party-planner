@@ -5,11 +5,15 @@ namespace PartyPlanner\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * User
  *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="PartyPlanner\UserBundle\Repository\UserRepository")
+ *
+ * @UniqueEntity(fields = "email", message = "A user with this email already exists")
  */
 class User extends Person
 {
@@ -26,8 +30,8 @@ class User extends Person
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
-     * @Assert\Email()
      *
+     * @Assert\Email()
      */
     private $email;
 
@@ -35,6 +39,7 @@ class User extends Person
      * @var \DateTime
      *
      * @ORM\Column(name="birthDate", type="datetime", nullable=true)
+     *
      * @Assert\Date()
      */
     private $birthDate;
@@ -43,6 +48,7 @@ class User extends Person
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=60)
+     *
      * @Assert\Length(min = 8, max=72)
      * @Assert\Regex(
      * pattern = "/[0-9]/",

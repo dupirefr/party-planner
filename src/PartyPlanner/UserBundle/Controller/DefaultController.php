@@ -1,6 +1,7 @@
 <?php
 
 namespace PartyPlanner\UserBundle\Controller;
+
 use PartyPlanner\UserBundle\Entity\User;
 use PartyPlanner\UserBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -10,9 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
-    /**
-     * @Route("/", name="home")
-     */
+	/**
+	 * @Route("/", name="home")
+	 *
+	 * @return Response
+	 */
     public function indexAction()
     {
         return $this->render('UserBundle:Default:index.html.twig');
@@ -37,6 +40,8 @@ class DefaultController extends Controller
      */
     public function signUpAction(Request $request)
     {
+    	$data = array();
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
@@ -48,8 +53,16 @@ class DefaultController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $data['infoBag'][] = 'Successfully registered';
+
+	        return $this->render('UserBundle:Default:index.html.twig', $data);
+        } else if ($form->isSubmitted() && !$form->isValid()) {
+        	$data['errorBag'][] = 'An error occurred while validating data';
         }
 
-        return $this->render('UserBundle:Default:signup.html.twig', array('form' => $form->createView()));
+        $data['form'] = $form->createView();
+
+        return $this->render('UserBundle:Default:signup.html.twig', $data);
     }
 }

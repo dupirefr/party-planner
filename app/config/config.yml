@@ -45,7 +45,7 @@ twig:
 doctrine:
     dbal:
         driver: pdo_pgsql
-        path: '%database_path%'
+        url: '%database_path%'
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'

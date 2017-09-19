@@ -5,4 +5,4 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: ThisTokenIsNotSoSecretChangeIt
-    database_path: null
+    database_path: '%env(DATABASE_URL)%'
