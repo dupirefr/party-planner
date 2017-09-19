@@ -4,7 +4,6 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "AppBundle\\": "src/AppBundle",
             "PartyPlanner\\": "src/PartyPlanner"
         },
         "classmap": [
@@ -35,7 +34,7 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0"
+        "symfony/phpunit-bridge": "^3.3"
     },
     "scripts": {
         "symfony-scripts": [

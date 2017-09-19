@@ -25,7 +25,7 @@ class UserType extends AbstractType
         ->add('birthDate', BirthdayType::class)
         ->add('password', RepeatedType::class, [
             'type' => PasswordType::class,
-            'invalid_message' => 'Les mots de passe ne correspondent pas.',
+            'invalid_message' => 'Passwords don\'t match',
             'required' => true,
             'first_options' => ['label' => 'Password'],
             'second_options' => ['label' => 'Repeat Password']
