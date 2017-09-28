@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class DefaultController extends Controller
+class SecurityController extends Controller
 {
 	/**
 	 * @Route("/", name="home")
@@ -18,7 +18,7 @@ class DefaultController extends Controller
 	 */
     public function indexAction()
     {
-        return $this->render('UserBundle:Default:index.html.twig');
+        return $this->render('UserBundle:Security:index.html.twig');
     }
 
 	/**
@@ -56,13 +56,13 @@ class DefaultController extends Controller
 
             $data['infoBag'][] = 'Successfully registered';
 
-	        return $this->render('UserBundle:Default:index.html.twig', $data);
+	        return $this->render('UserBundle:Security:index.html.twig', $data);
         } else if ($form->isSubmitted() && !$form->isValid()) {
         	$data['errorBag'][] = 'An error occurred while validating data';
         }
 
         $data['form'] = $form->createView();
 
-        return $this->render('UserBundle:Default:signup.html.twig', $data);
+        return $this->render('UserBundle:Security:signup.html.twig', $data);
     }
 }
