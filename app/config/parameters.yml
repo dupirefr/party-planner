@@ -5,4 +5,4 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: ThisTokenIsNotSoSecretChangeIt
-    database_path: '%env(DATABASE_URL)%'
+    database_path: 'postgres://pkpiyiioaaymjt:df337be6eeda922afb473ace17869e6ecd79d30d289f83b04b479db45eaf9151@ec2-176-34-111-152.eu-west-1.compute.amazonaws.com:5432/df2jt9t9up9arb'
