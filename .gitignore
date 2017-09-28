@@ -23,6 +23,3 @@
 /web/bundles/
 /web/build/
 parameters.yml
-
-### Node.js ###
-/node_modules/
