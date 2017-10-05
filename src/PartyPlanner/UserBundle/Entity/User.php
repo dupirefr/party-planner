@@ -1,11 +1,10 @@
 <?php
 
 namespace PartyPlanner\UserBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -15,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @UniqueEntity(fields = "email", message = "A user with this email already exists")
  */
-class User extends Person
+class User extends Person implements UserInterface
 {
     /**
      * @var int
@@ -34,6 +33,13 @@ class User extends Person
      * @Assert\Email()
      */
     private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=30, unique=true)
+     */
+    private $username;
 
     /**
      * @var \DateTime
@@ -65,13 +71,21 @@ class User extends Person
      */
     private $password;
 
+    public function eraseCredentials()
+    {
+        // TODO
+    }
+
+    ///////////////
+    // Accessors //
+    ///////////////
 
     /**
      * Get id
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -83,7 +97,7 @@ class User extends Person
      *
      * @return User
      */
-    public function setEmail($email)
+    public function setEmail(string $email)
     {
         $this->email = $email;
 
@@ -107,7 +121,7 @@ class User extends Person
      *
      * @return User
      */
-    public function setBirthDate($birthDate)
+    public function setBirthDate(\DateTime $birthDate)
     {
         $this->birthDate = $birthDate;
 
@@ -131,7 +145,7 @@ class User extends Person
      *
      * @return User
      */
-    public function setPassword($password)
+    public function setPassword(string $password)
     {
         $this->password = $password;
 
@@ -146,5 +160,38 @@ class User extends Person
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return static
+     */
+    public function setUsername(string $username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    public function getRoles()
+    {
+        // TODO
+        return array('ROLE_USER');
     }
 }

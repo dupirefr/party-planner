@@ -23,3 +23,6 @@
 /web/bundles/
 /web/build/
 parameters.yml
+
+### Removing log files ###
+*.log
