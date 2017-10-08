@@ -9,6 +9,7 @@
 
         {% block stylesheets %}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
         {% endblock %}
     </head>
     <body>
@@ -17,6 +18,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li {% if app.request.attributes.get('_route') == 'home' %}class="active"{% endif %}><a href="{{ path('home') }}">Home</a></li>
                 {% if app.user %}
+                <li {% if app.request.attributes.get('_route') == 'profile' %}class="active"{% endif %}><a href="{{ path('profile', {'id' : app.user.id}) }}">Profile</a></li>
                 <li {% if app.request.attributes.get('_route') == 'signout' %}class="active"{% endif %}><a href="{{ path('signout') }}">Sign out</a></li>
                 {% else %}
                 <li {% if app.request.attributes.get('_route') == 'signin' %}class="active"{% endif %}><a href="{{ path('signin') }}">Sign in</a></li>
@@ -32,17 +34,14 @@
                 <div class="col-xs-8 col-xs-offset-2">
                     {% block body %}
                     <div id="flash">
-                        {% if errorBag is defined %}
-                        {% for error in errorBag %}
-                        <div class="alert alert-danger">{{ error }}</div>
+                        {% block flash %}
+                        {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">{{ message }}</div>
                         {% endfor %}
-                        {% endif %}
-
-                        {% if infoBag is defined %}
-                        {% for info in infoBag %}
-                        <div class="alert alert-success">{{ info }}</div>
+                        {% for message in app.flashes('error') %}
+                        <div class="alert alert-danger">{{ message }}</div>
                         {% endfor %}
-                        {% endif %}
+                        {% endblock %}
                     </div>
                     {% endblock %}
                 </div>

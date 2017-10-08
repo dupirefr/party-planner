@@ -16,6 +16,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Person
 {
+    ////////////
+    // Fields //
+    ////////////
+
     /**
      * @var int
      *
@@ -43,25 +47,44 @@ class Person
      */
     private $lastName;
 
+    ///////////////
+    // Accessors //
+    ///////////////
 
     /**
-     * Get id
-     *
      * @return int
      */
-    public function getId()
+    public function getId() : ?int
     {
         return $this->id;
     }
 
     /**
-     * Set firstName
+     * @param int $id
      *
+     * @return Person
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName() : ?string
+    {
+        return $this->firstName;
+    }
+
+    /**
      * @param string $firstName
      *
      * @return Person
      */
-    public function setFirstName($firstName)
+    public function setFirstName($firstName) : Person
     {
         $this->firstName = $firstName;
 
@@ -69,36 +92,22 @@ class Person
     }
 
     /**
-     * Get firstName
-     *
      * @return string
      */
-    public function getFirstName()
+    public function getLastName() : ?string
     {
-        return $this->firstName;
+        return $this->lastName;
     }
 
     /**
-     * Set lastName
-     *
      * @param string $lastName
      *
      * @return Person
      */
-    public function setLastName($lastName)
+    public function setLastName($lastName) : Person
     {
         $this->lastName = $lastName;
 
         return $this;
-    }
-
-    /**
-     * Get lastName
-     *
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
     }
 }

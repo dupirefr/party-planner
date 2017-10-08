@@ -2,13 +2,17 @@
 
 namespace PartyPlanner\UserBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use PartyPlanner\UserBundle\Entity\User;
-use PartyPlanner\UserBundle\Form\UserType;
 use PartyPlanner\UserBundle\Form\SignInType;
+use PartyPlanner\UserBundle\Form\SignUpType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class SecurityController extends Controller
 {
@@ -30,22 +34,26 @@ class SecurityController extends Controller
 	 */
     public function signInAction(Request $request)
     {
-        $authUtils = $this->get('security.authentication_utils');
-        // get the login error if there is one
-        $error = $authUtils->getLastAuthenticationError();
+        if (!$this->isGranted('ROLE_USER')) {
+            $authUtils = $this->get('security.authentication_utils');
+            // get the login error if there is one
+            $error = $authUtils->getLastAuthenticationError();
 
-        // last username entered by the user
-        $lastUsername = $authUtils->getLastUsername();
+            // last username entered by the user
+            $lastUsername = $authUtils->getLastUsername();
 
-        $data['last_username'] = $lastUsername;
-        $data['error'] = $error;
+            $data['last_username'] = $lastUsername;
+            $data['error'] = $error;
 
-        $user = new User();
-        $form = $this->createForm(SignInType::class, $user);
+            $user = new User();
+            $form = $this->createForm(SignInType::class, $user);
 
-        $data['form'] = $form->createView();
+            $data['form'] = $form->createView();
 
-        return $this->render('UserBundle:Security:signin.html.twig', $data);
+            return $this->render('UserBundle:Security:signin.html.twig', $data);
+        } else {
+            return $this->redirectToRoute('home');
+        }
     }
 
     /**
@@ -59,27 +67,32 @@ class SecurityController extends Controller
     	$data = array();
 
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(SignUpType::class, $user);
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
-            $user->setPassword(password_hash($user->getPassword(), PASSWORD_BCRYPT));
+        if ($form->isSubmitted()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            if ($form->isValid()) {
+                $user = $form->getData();
+                $user->setPassword(password_hash($user->getPassword(), PASSWORD_BCRYPT));
+                $entityManager->persist($user);
+                $entityManager->flush();
 
-            $data['infoBag'][] = 'Successfully registered';
+                $this->addFlash('success', 'Successfully registered.');
 
-	        return $this->render('UserBundle:Security:index.html.twig', $data);
-        } else if ($form->isSubmitted() && !$form->isValid()) {
-        	$data['errorBag'][] = 'An error occurred while validating data';
+                $view = 'UserBundle:Security:index.html.twig';
+            } else {
+                $this->addFlash('error', 'An error occurred while validating data.');
+
+                $view = 'UserBundle:Security:signup.html.twig';
+            }
+        } else {
+            $view = 'UserBundle:Security:signup.html.twig';
         }
 
         $data['form'] = $form->createView();
-
-        return $this->render('UserBundle:Security:signup.html.twig', $data);
+        return $this->render($view, $data);
     }
 
     /**

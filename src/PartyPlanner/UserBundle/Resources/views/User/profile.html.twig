@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block pageTitle %}{{ user.username }}'s profile - {{ parent() }}{% endblock %}
+
+{% block title %}{{ user.username }}'s profile{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div>
+        <div class="form-group">
+            <span class="pp-label">First name</span>
+            {{ user.firstName }}
+        </div>
+        <div class="form-group">
+            <span class="pp-label">Last name</span>
+            {{ user.lastName }}
+        </div>
+        <div class="form-group">
+            <span class="pp-label">Username</span>
+            {{ user.firstName }}
+        </div>
+        <div class="form-group">
+            <span class="pp-label">Email</span>
+            {{ user.email }}
+        </div>
+        <div class="form-group">
+            <span class="pp-label">Birth date</span>
+            {{ user.birthDate|date("d/m/Y") }}
+        </div>
+    </div>
+{% endblock %}

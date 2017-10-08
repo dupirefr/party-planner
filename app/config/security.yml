@@ -21,12 +21,11 @@ security:
         main:
             pattern: ^/
             provider: pgsql
-            anonymous: ~
+            anonymous: true
             form_login:
                 login_path: signin
                 check_path: signin
                 default_target_path: home
-
             logout:
                 path: signout
                 target: home

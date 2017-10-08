@@ -1,0 +1,30 @@
+{% form_theme userForm 'bootstrap_3_layout.html.twig' %}
+{% form_theme passwordForm 'bootstrap_3_layout.html.twig' %}
+
+{% extends 'base.html.twig' %}
+
+{% block pageTitle %}Your profile - {{ parent() }}{% endblock %}
+
+{% block title %}Your profile{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    {{ form_start(userForm) }}
+        {{ form_errors(userForm) }}
+        {{ form_widget(userForm) }}
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Update profile</button>
+        </div>
+    {{ form_end(userForm) }}
+
+    {{ form_start(passwordForm) }}
+        {{ form_errors(passwordForm) }}
+        {{ form_widget(passwordForm) }}
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Change password</button>
+        </div>
+    {{ form_end(passwordForm) }}
+{% endblock %}

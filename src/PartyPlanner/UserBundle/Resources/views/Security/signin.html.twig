@@ -6,12 +6,15 @@
 
 {% block title %}Sign in{% endblock %}
 
+{% block flash %}
+    {{ parent() }}
+    {% if error %}
+    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+{% endblock %}
+
 {% block body %}
     {{ parent() }}
-
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
     {{ form_start(form) }}
         {{ form_errors(form) }}

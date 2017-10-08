@@ -1,6 +1,8 @@
 <?php
 
 namespace PartyPlanner\UserBundle\Entity;
+
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -12,18 +14,23 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="PartyPlanner\UserBundle\Repository\UserRepository")
  *
+ * @UniqueEntity(fields = "username", message = "A user with this username already exists")
  * @UniqueEntity(fields = "email", message = "A user with this email already exists")
  */
 class User extends Person implements UserInterface
 {
+    ////////////
+    // Fields //
+    ////////////
+
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="username", type="string", length=30, unique=true)
+     *
+     * @Assert\Length(max = 30)
      */
-    private $id;
+    private $username;
 
     /**
      * @var string
@@ -35,14 +42,7 @@ class User extends Person implements UserInterface
     private $email;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="username", type="string", length=30, unique=true)
-     */
-    private $username;
-
-    /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="birthDate", type="datetime", nullable=true)
      *
@@ -71,7 +71,22 @@ class User extends Person implements UserInterface
      */
     private $password;
 
-    public function eraseCredentials()
+    /////////////
+    // Methods //
+    /////////////
+
+    /**
+     * @return string
+     */
+    public function getSalt() : ?string
+    {
+        return null;
+    }
+
+    /**
+     *
+     */
+    public function eraseCredentials() : void
     {
         // TODO
     }
@@ -81,99 +96,9 @@ class User extends Person implements UserInterface
     ///////////////
 
     /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail(string $email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
      * @return string
      */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set birthDate
-     *
-     * @param \DateTime $birthDate
-     *
-     * @return User
-     */
-    public function setBirthDate(\DateTime $birthDate)
-    {
-        $this->birthDate = $birthDate;
-
-        return $this;
-    }
-
-    /**
-     * Get birthDate
-     *
-     * @return \DateTime
-     */
-    public function getBirthDate()
-    {
-        return $this->birthDate;
-    }
-
-    /**
-     * Set password
-     *
-     * @param string $password
-     *
-     * @return User
-     */
-    public function setPassword(string $password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSalt()
-    {
-        return null;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername() : ?string
     {
         return $this->username;
     }
@@ -181,15 +106,79 @@ class User extends Person implements UserInterface
     /**
      * @param string $username
      *
-     * @return static
+     * @return User
      */
-    public function setUsername(string $username)
+    public function setUsername(string $username) : User
     {
         $this->username = $username;
+
         return $this;
     }
 
-    public function getRoles()
+    /**
+     * @return string
+     */
+    public function getEmail() : ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail(string $email) : User
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getBirthDate() : ?DateTime
+    {
+        return $this->birthDate;
+    }
+
+    /**
+     * @param DateTime $birthDate
+     *
+     * @return User
+     */
+    public function setBirthDate(DateTime $birthDate) : User
+    {
+        $this->birthDate = $birthDate;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword() : ?string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     *
+     * @return User
+     */
+    public function setPassword(string $password) : User
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoles() : array
     {
         // TODO
         return array('ROLE_USER');
