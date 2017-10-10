@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block pageTitle %}Events list - {{ parent() }}{% endblock %}
+
+{% block title %}Events list{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <ul>
+    {% for event in events %}
+        <li>{{ event.name }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
