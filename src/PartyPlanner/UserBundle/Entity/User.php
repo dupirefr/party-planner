@@ -3,7 +3,9 @@
 namespace PartyPlanner\UserBundle\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use PartyPlanner\UserBundle\Entity\Role;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -70,6 +72,14 @@ class User extends Person implements UserInterface
      * )
      */
     private $password;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="PartyPlanner\UserBundle\Entity\Role", inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $roles;
 
     /////////////
     // Methods //
@@ -180,7 +190,37 @@ class User extends Person implements UserInterface
      */
     public function getRoles() : array
     {
-        // TODO
-        return array('ROLE_USER');
+        return $this->roles;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->roles = new ArrayCollection();
+    }
+
+    /**
+     * Add role
+     *
+     * @param Role $role
+     *
+     * @return User
+     */
+    public function addRole(Role $role)
+    {
+        $this->roles[] = $role;
+
+        return $this;
+    }
+
+    /**
+     * Remove role
+     *
+     * @param Role $role
+     */
+    public function removeRole(Role $role)
+    {
+        $this->roles->removeElement($role);
     }
 }

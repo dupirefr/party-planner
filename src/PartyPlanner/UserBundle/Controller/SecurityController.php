@@ -2,17 +2,13 @@
 
 namespace PartyPlanner\UserBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use PartyPlanner\UserBundle\Entity\User;
-use PartyPlanner\UserBundle\Form\SignInType;
 use PartyPlanner\UserBundle\Form\SignUpType;
+use PartyPlanner\UserBundle\Form\SignInType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class SecurityController extends Controller
 {
@@ -76,6 +72,9 @@ class SecurityController extends Controller
             if ($form->isValid()) {
                 $user = $form->getData();
                 $user->setPassword(password_hash($user->getPassword(), PASSWORD_BCRYPT));
+                $roleRepository = $entityManager->getRepository('UserBundle:Role');
+                $userRole = $roleRepository->findOneBy(array('name' => 'ROLE_USER'));
+                $user->addRole($userRole);
                 $entityManager->persist($user);
                 $entityManager->flush();
 

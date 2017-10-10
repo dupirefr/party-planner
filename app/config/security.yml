@@ -5,6 +5,14 @@ security:
         PartyPlanner\UserBundle\Entity\User:
             algorithm: bcrypt
 
+    role_hierarchy:
+        ROLE_JUBILEE: ROLE_USER
+        ROLE_COMITEE: ROLE_JUBILEE
+        ROLE_COMMUNICATOR: ROLE_COMITEE
+        ROLE_MONEY_KEEPER: ROLE_COMITEE
+        ROLE_PARTY_HOST: ROLE_JUBILEE
+        ROLE_ADMIN: [ROLE_USER, ROLE_COMITEE, ROLE_COMMUNICATOR, ROLE_MONEY_KEEPER, ROLE_PARTY_HOST]
+
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         pgsql:
