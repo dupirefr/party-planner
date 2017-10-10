@@ -2,12 +2,10 @@
 
 namespace PartyPlanner\UserBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use PartyPlanner\UserBundle\Entity\User;
 use PartyPlanner\UserBundle\Form\SignInType;
 use PartyPlanner\UserBundle\Form\SignUpType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -52,6 +50,7 @@ class SecurityController extends Controller
 
             return $this->render('UserBundle:Security:signin.html.twig', $data);
         } else {
+            $this->addFlash('warning', 'You\'ve already signed in');
             return $this->redirectToRoute('home');
         }
     }
@@ -80,19 +79,14 @@ class SecurityController extends Controller
                 $entityManager->flush();
 
                 $this->addFlash('success', 'Successfully registered.');
-
-                $view = 'UserBundle:Security:index.html.twig';
+                return $this->redirectToRoute('home');
             } else {
                 $this->addFlash('error', 'An error occurred while validating data.');
-
-                $view = 'UserBundle:Security:signup.html.twig';
             }
-        } else {
-            $view = 'UserBundle:Security:signup.html.twig';
         }
 
         $data['form'] = $form->createView();
-        return $this->render($view, $data);
+        return $this->render('UserBundle:Security:signup.html.twig', $data);
     }
 
     /**
