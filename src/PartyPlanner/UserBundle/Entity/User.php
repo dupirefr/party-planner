@@ -222,8 +222,7 @@ class User extends Person implements UserInterface
      */
     public function getRoles() : array
     {
-        $role = new Role();
-        return $this->roles->map([$role, 'getName'])->toArray();
+        return $this->roles->map(function (Role $role) { return $role->getName(); })->toArray();
     }
 
     /**

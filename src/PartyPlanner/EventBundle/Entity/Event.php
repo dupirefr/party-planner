@@ -45,7 +45,7 @@ class Event
      *
      * @Assert\DateTime()
      * @Assert\GreaterThan(
-     *     value = "now",
+     *     value = "now UTC+1",
      *     message = "The date must happen in the future"
      * )
      */
