@@ -5,6 +5,7 @@ namespace PartyPlanner\UserBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use PartyPlanner\UserBundle\Entity\User;
+use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
 /**
  * Role

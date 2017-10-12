@@ -18,8 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 class EventController extends Controller
 {
     /**
-     * @Route("/admin/event", name = "event_creation")
-     * @Security("has_role('ROLE_USER')")
+     * @Route("/admin/event", name = "admin_event_creation")
+     * @Security("has_role('ROLE_ADMIN')")
      *
      * @param Request $request
      *
@@ -42,7 +42,7 @@ class EventController extends Controller
                 $entityManager->flush();
 
                 $this->addFlash('success', 'Event successfully created');
-                return $this->redirectToRoute('event_lists');
+                return $this->redirectToRoute('admin_events');
             } else {
                 $this->addFlash('error', 'An error occurred while validating data');
             }
@@ -54,8 +54,8 @@ class EventController extends Controller
     }
 
     /**
-     * @Route("/admin/events", name = "event_lists")
-     * @Security("has_role('ROLE_USER')")
+     * @Route("/admin/events", name = "admin_events")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function eventList()
     {

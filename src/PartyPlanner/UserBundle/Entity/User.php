@@ -3,12 +3,15 @@
 namespace PartyPlanner\UserBundle\Entity;
 
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
+
 use Doctrine\ORM\Mapping as ORM;
-use PartyPlanner\UserBundle\Entity\Role;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 use Symfony\Component\Security\Core\User\UserInterface;
+
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * User
@@ -74,18 +77,29 @@ class User extends Person implements UserInterface
     private $password;
 
     /**
-     * @var ArrayCollection
+     * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="PartyPlanner\UserBundle\Entity\Role", inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
      */
     private $roles;
 
+    ////////////////
+    // Controller //
+    ////////////////
+
+    public function __construct()
+    {
+        $this->roles = new ArrayCollection();
+    }
+
     /////////////
     // Methods //
     /////////////
 
     /**
+     * Get salt
+     *
      * @return string
      */
     public function getSalt() : ?string
@@ -106,6 +120,8 @@ class User extends Person implements UserInterface
     ///////////////
 
     /**
+     * Get username
+     *
      * @return string
      */
     public function getUsername() : ?string
@@ -114,6 +130,8 @@ class User extends Person implements UserInterface
     }
 
     /**
+     * Set username
+     *
      * @param string $username
      *
      * @return User
@@ -126,6 +144,8 @@ class User extends Person implements UserInterface
     }
 
     /**
+     * Get email
+     *
      * @return string
      */
     public function getEmail() : ?string
@@ -134,6 +154,8 @@ class User extends Person implements UserInterface
     }
 
     /**
+     * Set email
+     *
      * @param string $email
      *
      * @return User
@@ -146,6 +168,8 @@ class User extends Person implements UserInterface
     }
 
     /**
+     * Get birth date
+     *
      * @return DateTime
      */
     public function getBirthDate() : ?DateTime
@@ -154,6 +178,8 @@ class User extends Person implements UserInterface
     }
 
     /**
+     * Set birth date
+     *
      * @param DateTime $birthDate
      *
      * @return User
@@ -166,6 +192,8 @@ class User extends Person implements UserInterface
     }
 
     /**
+     * Get password
+     *
      * @return string
      */
     public function getPassword() : ?string
@@ -174,6 +202,8 @@ class User extends Person implements UserInterface
     }
 
     /**
+     * Set password
+     *
      * @param string $password
      *
      * @return User
@@ -186,18 +216,14 @@ class User extends Person implements UserInterface
     }
 
     /**
+     * Get roles
+     *
      * @return array
      */
     public function getRoles() : array
     {
-        return $this->roles;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->roles = new ArrayCollection();
+        $role = new Role();
+        return $this->roles->map([$role, 'getName'])->toArray();
     }
 
     /**
@@ -207,7 +233,7 @@ class User extends Person implements UserInterface
      *
      * @return User
      */
-    public function addRole(Role $role)
+    public function addRole(Role $role) : User
     {
         $this->roles[] = $role;
 
@@ -218,9 +244,13 @@ class User extends Person implements UserInterface
      * Remove role
      *
      * @param Role $role
+     *
+     * @return User
      */
-    public function removeRole(Role $role)
+    public function removeRole(Role $role) : User
     {
         $this->roles->removeElement($role);
+
+        return $this;
     }
 }
