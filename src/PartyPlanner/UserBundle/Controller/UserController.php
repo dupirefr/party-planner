@@ -37,7 +37,7 @@ class UserController extends Controller
     {
         $data = array();
 
-        if ($this->getUser()->getUsername() == $user->getUsername()) {
+        if ($this->getUser()->getUsername() === $user->getUsername() || $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             $userForm = $this->createForm(UserType::class, $user);
             $userForm->handleRequest($request);
 
