@@ -38,6 +38,12 @@ security:
                 path: signout
                 target: home
 
+            remember_me:
+                secret:   '%secret%'
+                lifetime: 2419200 # 4 weeks in seconds
+                path:     /
+                httponly: true
+
             # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
