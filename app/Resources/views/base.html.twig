@@ -20,17 +20,20 @@
                     <a href="{{ path('home') }}" class="nav-link active">Home</a>
                 </li>
                 {% if app.user %}
+                    <li {% if app.request.attributes.get('_route') == 'events' %}class="nav-item"{% endif %}>
+                        <a href="{{ path('events') }}" class="nav-link active">Events</a>
+                    </li>
                     <li {% if app.request.attributes.get('_route') == 'profile' %}class="nav-item"{% endif %}>
                         <a href="{{ path('profile', {'id' : app.user.id}) }}" class="nav-link active">Profile</a>
                     </li>
-                    <li {% if app.request.attributes.get('_route') == 'signout' %}class="active"{% endif %}>
+                    <li {% if app.request.attributes.get('_route') == 'signout' %}class="nav-item"{% endif %}>
                         <a href="{{ path('signout') }}" class="nav-link active">Sign out</a>
                     </li>
                 {% else %}
-                    <li {% if app.request.attributes.get('_route') == 'signin' %}class="active"{% endif %}>
+                    <li {% if app.request.attributes.get('_route') == 'signin' %}class="nav-item"{% endif %}>
                         <a href="{{ path('signin') }}" class="nav-link active">Sign in</a>
                     </li>
-                    <li {% if app.request.attributes.get('_route') == 'signup' %}class="active"{% endif %}>
+                    <li {% if app.request.attributes.get('_route') == 'signup' %}class="nav-item"{% endif %}>
                         <a href="{{ path('signup') }}" class="nav-link active">Sign up</a>
                     </li>
                 {% endif %}
@@ -48,7 +51,7 @@
         </nav>
 
         <!-- Content -->
-        <h1>{% block title %}{% endblock %}</h1>
+        <h1 class="text-center">{% block title %}{% endblock %}</h1>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-8 col-xs-offset-2">

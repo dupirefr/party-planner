@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block pageTitle %}{{ event.name }} - {{ parent() }}{% endblock %}
+
+{% block title %}{{ event.name }}{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div>
+        <div class="form-group">
+            <span class="pp-label">When?</span>
+            {{ event.date|date("d/m/Y \\a\\t g:ia") }}
+        </div>
+        <div class="form-group">
+            <span class="pp-label">What?</span>
+            {{ event.description }}
+        </div>
+    </div>
+{% endblock %}

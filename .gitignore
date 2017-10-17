@@ -22,7 +22,7 @@
 /vendor/
 /web/bundles/
 /web/build/
-parameters.yml
+app/config/parameters.yml
 
 ### Removing log files ###
 *.log

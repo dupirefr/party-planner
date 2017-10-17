@@ -1,0 +1,11 @@
+{% form_theme eventForm 'bootstrap_3_layout.html.twig' %}
+
+{% set title = 'Create an event' %}
+
+{% extends 'base_admin.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+
+    {% include 'EventBundle:Admin:form.html.twig' with {'button_label': 'Create'} %}
+{% endblock %}

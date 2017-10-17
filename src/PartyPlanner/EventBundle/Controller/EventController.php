@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class EventController
@@ -18,46 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
 class EventController extends Controller
 {
     /**
-     * @Route("/admin/event", name = "admin_event_creation")
-     * @Security("has_role('ROLE_ADMIN')")
-     *
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/events", name = "events")
+     * @Security("has_role('ROLE_USER')")
      */
-    public function eventCreationAction(Request $request)
-    {
-        $data = array();
-
-        $event = new Event();
-
-        $eventForm = $this->createForm(EventType::class, $event);
-        $eventForm->handleRequest($request);
-
-        if ($eventForm->isSubmitted()) {
-            if ($eventForm->isValid()) {
-                $event = $eventForm->getData();
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($event);
-                $entityManager->flush();
-
-                $this->addFlash('success', 'Event successfully created');
-                return $this->redirectToRoute('admin_events');
-            } else {
-                $this->addFlash('error', 'An error occurred while validating data');
-            }
-        }
-
-        $data['eventForm'] = $eventForm->createView();
-
-        return $this->render('EventBundle:EventAdmin:event_form.html.twig', $data);
-    }
-
-    /**
-     * @Route("/admin/events", name = "admin_events")
-     * @Security("has_role('ROLE_ADMIN')")
-     */
-    public function eventList()
+    public function eventsAction()
     {
         $data = array();
 
@@ -66,6 +31,22 @@ class EventController extends Controller
 
         $data['events'] = $events;
 
-        return $this->render('EventBundle:EventAdmin:events.html.twig', $data);
+        return $this->render('EventBundle:Event:list.html.twig', $data);
+    }
+
+    /**
+     * @Route("/event/{id}", name = "event")
+     * @Security("has_role('ROLE_USER')")
+     *
+     * @param Event $event
+     *
+     * @return Response
+     */
+    public function eventAction(Event $event)
+    {
+        $data = array();
+        $data['event'] = $event;
+
+        return $this->render('EventBundle:Event:single.html.twig', $data);
     }
 }
