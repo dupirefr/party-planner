@@ -31,7 +31,7 @@ class AdminController extends Controller
 
         $data['events'] = $events;
 
-        return $this->render('EventBundle:EventAdmin:events.html.twig', $data);
+        return $this->render('EventBundle:Admin:list.html.twig', $data);
     }
 
     /**
@@ -79,7 +79,7 @@ class AdminController extends Controller
                 $event = $eventForm->getData();
                 $entityManager = $this->getDoctrine()->getManager();
 
-                if ($event->getId() === 0) {
+                if (is_null($event->getId())) {
                     $entityManager->persist($event);
                 } else {
                     $entityManager->merge($event);
@@ -96,6 +96,10 @@ class AdminController extends Controller
 
         $data['eventForm'] = $eventForm->createView();
 
-        return $this->render('EventBundle:EventAdmin:event_form.html.twig', $data);
+        if (is_null($event->getId())) {
+            return $this->render('EventBundle:Admin:creation.html.twig', $data);
+        } else {
+            return $this->render('EventBundle:Admin:update.html.twig', $data);
+        }
     }
 }

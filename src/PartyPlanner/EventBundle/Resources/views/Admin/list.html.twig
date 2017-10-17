@@ -1,0 +1,13 @@
+{% set title = 'Events administration panel' %}
+
+{% extends 'base_admin.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+
+    <ul>
+    {% for event in events %}
+        <li><a href="{{ path('admin_event_update', {'id' : event.id}) }}">{{ event.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

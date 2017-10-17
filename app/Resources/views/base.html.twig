@@ -18,6 +18,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li {% if app.request.attributes.get('_route') == 'home' %}class="active"{% endif %}><a href="{{ path('home') }}">Home</a></li>
                 {% if app.user %}
+                <li {% if app.request.attributes.get('_route') == 'events' %}class="active"{% endif %}><a href="{{ path('events') }}">Events</a></li>
                 <li {% if app.request.attributes.get('_route') == 'profile' %}class="active"{% endif %}><a href="{{ path('profile', {'id' : app.user.id}) }}">Profile</a></li>
                 <li {% if app.request.attributes.get('_route') == 'signout' %}class="active"{% endif %}><a href="{{ path('signout') }}">Sign out</a></li>
                 {% else %}
@@ -28,7 +29,7 @@
         </nav>
 
         <!-- Content -->
-        <h1>{% block title %}{% endblock %}</h1>
+        <h1 class="text-center">{% block title %}{% endblock %}</h1>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-8 col-xs-offset-2">

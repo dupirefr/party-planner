@@ -1,0 +1,11 @@
+{% form_theme eventForm 'bootstrap_3_layout.html.twig' %}
+
+{% set title = 'Update the event' %}
+
+{% extends 'base_admin.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+
+    {% include 'EventBundle:Admin:form.html.twig' with {'button_label': 'Update'} %}
+{% endblock %}
