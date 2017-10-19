@@ -15,6 +15,7 @@
     <body>
         <!-- Nav -->
         <nav class="navbar navbar-inverse navbar-default navbar-static-top navbar-collapse">
+            <a href="{{ path('home') }}" class="navbar-brand">Party Planner</a>
             <ul class="nav navbar-nav navbar-right">
                 <li {% if app.request.attributes.get('_route') == 'home' %}class="nav-item"{% endif %}>
                     <a href="{{ path('home') }}" class="nav-link active">Home</a>
