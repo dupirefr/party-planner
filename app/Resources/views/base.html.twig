@@ -15,7 +15,7 @@
     <body>
         <!-- Nav -->
         <nav class="navbar navbar-inverse navbar-default navbar-static-top navbar-collapse">
-            <a href="{{ path('home') }}" class="navbar-brand">Party Planner</a>
+
             <ul class="nav navbar-nav navbar-right">
                 <li {% if app.request.attributes.get('_route') == 'home' %}class="nav-item"{% endif %}>
                     <a href="{{ path('home') }}" class="nav-link active">Home</a>
@@ -52,7 +52,10 @@
         </nav>
 
         <!-- Content -->
-        <h1 class="text-center">{% block title %}{% endblock %}</h1>
+        <div class="page-header">
+            <h1 style="font-size:1.5em;">{% block title %}{% endblock %}</h1>
+        </div>
+
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-8 col-xs-offset-2">
