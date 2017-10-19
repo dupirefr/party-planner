@@ -13,16 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 class SecurityController extends Controller
 {
 	/**
-	 * @Route("/", name="home")
-	 *
-	 * @return Response
-	 */
-    public function indexAction()
-    {
-        return $this->render('UserBundle:Security:index.html.twig');
-    }
-
-	/**
 	 * @Route("/signin", name="signin")
 	 *
 	 * @param Request $request

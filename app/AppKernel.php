@@ -17,6 +17,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new PartyPlanner\UserBundle\UserBundle(),
             new PartyPlanner\EventBundle\EventBundle(),
+            new PartyPlanner\CoreBundle\CoreBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
