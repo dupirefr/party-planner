@@ -84,6 +84,13 @@ class User extends Person implements UserInterface
      */
     private $roles;
 
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="PartyPlanner\EventBundle\Entity\Comment", mappedBy="user")
+     */
+    private $comments;
+
     ////////////////
     // Controller //
     ////////////////

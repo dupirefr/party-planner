@@ -5,6 +5,7 @@ namespace PartyPlanner\EventBundle\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
+use GuzzleHttp\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -59,6 +60,13 @@ class Event
      * @Assert\NotBlank()
      */
     private $description;
+
+    /**
+     * @var Collection
+     *
+     * @ORM\ManyToOne(targetEntity="PartyPlanner\EventBundle\Entity\Comment")
+     */
+    private $comments;
 
     ///////////////
     // Accessors //
@@ -145,4 +153,5 @@ class Event
 
         return $this;
     }
+
 }
