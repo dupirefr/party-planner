@@ -3,6 +3,8 @@
 namespace PartyPlanner\EventBundle\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -59,6 +61,22 @@ class Event
      * @Assert\NotBlank()
      */
     private $description;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="EntranceFee", mappedBy="event")
+     */
+    private $entranceFees;
+
+    //////////////////
+    // Constructors //
+    //////////////////
+
+    public function __construct()
+    {
+        $this->entranceFees = new ArrayCollection();
+    }
 
     ///////////////
     // Accessors //
@@ -142,6 +160,25 @@ class Event
     public function setDescription(string $description) : Event
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getEntranceFees(): Collection
+    {
+        return $this->entranceFees;
+    }
+
+    /**
+     * @param Collection $entranceFees
+     * @return Event
+     */
+    public function setEntranceFees(Collection $entranceFees): Event
+    {
+        $this->entranceFees = $entranceFees;
 
         return $this;
     }
