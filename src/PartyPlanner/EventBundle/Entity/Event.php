@@ -5,7 +5,6 @@ namespace PartyPlanner\EventBundle\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-use GuzzleHttp\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -67,6 +66,22 @@ class Event
      * @ORM\ManyToOne(targetEntity="PartyPlanner\EventBundle\Entity\Comment")
      */
     private $comments;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="EntranceFee", mappedBy="event")
+     */
+    private $entranceFees;
+
+    //////////////////
+    // Constructors //
+    //////////////////
+
+    public function __construct()
+    {
+        $this->entranceFees = new ArrayCollection();
+    }
 
     ///////////////
     // Accessors //
@@ -154,4 +169,22 @@ class Event
         return $this;
     }
 
+    /**
+     * @return Collection
+     */
+    public function getEntranceFees(): Collection
+    {
+        return $this->entranceFees;
+    }
+
+    /**
+     * @param Collection $entranceFees
+     * @return Event
+     */
+    public function setEntranceFees(Collection $entranceFees): Event
+    {
+        $this->entranceFees = $entranceFees;
+
+        return $this;
+    }
 }
